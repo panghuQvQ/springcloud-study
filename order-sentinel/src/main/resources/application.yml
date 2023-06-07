@@ -1,0 +1,27 @@
+server:
+  port: 8061
+
+spring:
+  application:
+    name: order-sentinel
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 172.16.10.132:8870
+      web-context-unify: false # false：不收敛默认链路     true：默认将调用链路收敛
+      datasource:
+        flow-rule: # 名字可以自定义
+          nacos:
+            server-addr: 172.16.10.132:8847 # 服务地址
+            username: nacos
+            password: nacos
+            dataId: order-sentinel-flow-rule2 # 绑定 nacos配置的规则 至 Sentinel 中
+            dataType: json
+            ruleType: FLOW
+            namespace: public
+    nacos: # 连接 nacos
+      server-addr: 172.16.10.132:8847 # 服务地址
+      discovery:
+        username: nacos
+        password: nacos
+

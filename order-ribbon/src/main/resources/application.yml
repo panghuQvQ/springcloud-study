@@ -1,0 +1,23 @@
+server:
+  port: 8030
+
+# 应用名称 （nacos会将该名称当做服务名称）
+spring:
+  application:
+    name: order-service
+  cloud:
+    nacos:
+      server-addr: 172.16.10.132:8847 # 服务地址
+      discovery:
+        username: nacos
+        password: nacos
+#        namespace: public
+#        ephemeral: false # 永久实例 哪怕宕机了也不会删除该实例？
+
+#        service: # 默认取${spring.application.name}的值，也可以通过该选项配置 服务名称
+#        group: #默认DEFAULT_GROUP  分组管理
+stock-service:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.wang.ribbon.rule.CustomRule # 配置定义负载均衡策略
+
+

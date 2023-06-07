@@ -1,0 +1,7 @@
+server:
+  port: 8050
+
+spring:
+  profiles:
+    active: dev # 会去配置中心中找 -dev 的配置文件
+

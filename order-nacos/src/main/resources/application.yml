@@ -1,0 +1,25 @@
+server:
+  port: 8020
+
+# 应用名称 （nacos会将该名称当做服务名称）
+spring:
+  application:
+    name: order-service
+  cloud:
+    nacos:
+      server-addr: 172.16.10.132:8847 # 服务地址（连接的是nginx地址，通过nginx 代理到nacos）
+      discovery:
+        username: nacos
+        password: nacos
+#        namespace: public # 服务隔离，可以配置开发环境，生产环境
+#        ephemeral: false # 永久实例 哪怕宕机了也不会删除该实例,默认 true(代表：临时实例)
+
+#        service: # 默认取${spring.application.name}的值，也可以通过该选项配置 服务名称
+#        group: #默认DEFAULT_GROUP  分组管理
+#        weight: 2 # 权重
+
+# 注意！！
+# 如果：健康实例数/总实例数 < 保护阈值 ，当出现洪峰流量时，那么nacos就会把不健康的实例继续使用，用来应对雪崩保护
+
+
+

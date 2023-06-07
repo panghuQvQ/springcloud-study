@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: seata-order
+  datasource:
+    url: jdbc:mysql://172.16.10.132:3306/seata_order?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      server-addr: 172.16.10.132:8847 # 此处通过 nginx进行通信
+      discovery:
+        username: nacos
+        password: nacos
+    alibaba:
+      seata:
+        tx-service-group: my_test_tx_group # 配置事务分组，在 "seata\seata\script\config-center\config.txt" 中设置
+server:
+  port: 8070
+seata:
+  registry: # 注册中心
+    # 配置 seata 的注册中心, 告诉 seata client 怎么去访问 seata server 事务协调者进行通信
+    type: nacos
+    nacos:
+      server-addr: 172.16.10.132:8847 # seata-server 所在的注册中心地址
+      application: seata-server # 指定 seata-server 在注册中心的 服务名， (默认 seata-server)
+      username: nacos
+      password: nacos
+      group: SEATA_GROUP # 默认 SEATA_GROUP
+  config:
+    # 配置 seata 的配置中心，可以读取关于 seata client 的一些配置，即 "seata\seata\script\config-center\config.txt" 中的配置
+    type: nacos
+    nacos: # 配置中心
+      server-addr: 172.16.10.132:8847
+      username: nacos
+      password: nacos
+      group: SEATA_GROUP
+
+

@@ -1,0 +1,19 @@
+server:
+  port: 8041
+
+# 应用名称 （nacos会将该名称当做服务名称）
+spring:
+  application:
+    name: order-openfeign-sentinel
+  cloud:
+    nacos:
+      server-addr: 172.16.10.132:8847 # 服务地址
+      discovery:
+        username: nacos
+        password: nacos
+
+# 添加 feign 对 sentinel 的支持
+feign:
+  sentinel:
+    enabled: true # 默认为false
+

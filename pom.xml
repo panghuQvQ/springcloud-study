@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <modules>
+        <module>order</module>
+        <module>stock</module>
+        <module>order-nacos</module>
+        <module>order-ribbon</module>
+        <module>stock-nacos</module>
+        <module>order-loadbalancer</module>
+        <module>order-openfeign</module>
+        <module>product-nacos</module>
+        <module>config-nacos</module>
+        <module>order-sentinel</module>
+        <module>order-openfeign-sentinel</module>
+        <module>seata</module>
+        <module>gateway</module>
+    </modules>
+
+    <!--springboot的版本管理器 以后公司中开发就可以使用parent去继承公司自定义的父maven项目-->
+
+    <groupId>com.wang.springcloud</groupId>
+    <artifactId>springcloud-test</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>springcloud-test</name>
+    <description>springcloud-test</description>
+
+    <!--父类不会打包成jar包-->
+    <packaging>pom</packaging>
+
+    <properties>
+        <java.version>11</java.version>
+<!--        <spring.cloud.alibaba.version>2021.0.1.0</spring.cloud.alibaba.version>-->
+<!--        <spring.cloud.version>2021.0.1</spring.cloud.version>-->
+<!--        <spring.boot.version>2.6.3</spring.boot.version>-->
+
+        <!-- 这个版本目前在 sentinel 链路限流部分出现问题,无法实现-->
+<!--        <spring.cloud.alibaba.version>2.2.1.RELEASE</spring.cloud.alibaba.version>-->
+<!--        <spring.cloud.version>Hoxton.SR3</spring.cloud.version>-->
+<!--        <spring.boot.version>2.2.5.RELEASE</spring.boot.version>-->
+
+        <spring.cloud.alibaba.version>2.2.5.RELEASE</spring.cloud.alibaba.version>
+        <spring.cloud.version>Hoxton.SR8</spring.cloud.version>
+        <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!--项目依赖管理，父项目只是声明依赖，子项目需要写明需要的依赖（可以省略版本信息）-->
+    <dependencyManagement>
+        <dependencies>
+            <!--spring cloud alibaba 版本管理器-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--spring cloud 版本管理器-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--springboot 版本管理器-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

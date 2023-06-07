@@ -1,0 +1,42 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    nacos:
+      server-addr: 172.16.10.132:8847 # 服务地址
+      discovery:
+        username: nacos
+        password: nacos
+    # 配置 sentinel
+    sentinel:
+      transport:
+        dashboard: 172.16.10.132:8870
+    # Gateway 配置
+    gateway:
+      # 路由规则
+      routes:
+        - id: seata-order   # 路由的唯一标识
+          uri: lb://seata-order   # 需要转发的地址  lb: 使用nacos中的本地负载均衡策 // 服务名
+          # 断言规则,用于路由规则的匹配
+          predicates:
+            - Path=/order-serv/**
+                # http://localhost:8088/order-serv/order/add  路由到 ↓
+                # http://localhost:8020/order-serv/order/add
+            - CheckAuth=wzy  # 自定义断言
+          filters:
+            - StripPrefix=1  # 转发之前去掉第一层路径
+                # http://localhost:8020/order/add
+            - AddRequestHeader=X-Request-color, red   # 添加请求头
+            - CheckAuth=name,wzy
+      # 跨域的配置
+      globalcors:
+        cors-configurations:
+          '[/**]':   # 允许跨域访问的资源
+            allowedOrigins:
+              - "*" # 跨域允许的来源
+            allowedMethods:
+              - GET
+              - POST

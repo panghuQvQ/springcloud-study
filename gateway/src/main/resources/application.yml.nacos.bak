@@ -1,0 +1,19 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    nacos:
+      server-addr: 172.16.10.132:8847 # 服务地址
+      discovery:
+        username: nacos
+        password: nacos
+    # Gateway 配置
+    gateway:
+      discovery:
+        locator:
+          enabled: true  # 是否启动自动识别nacos服务
+          # http://localhost:8088/order-service/order/add  根据服务名自动路由到 ↓      "order-service"  注册在nacos中的服务名
+          # lb://order-service/order/add

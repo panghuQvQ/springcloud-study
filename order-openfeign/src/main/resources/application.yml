@@ -1,0 +1,36 @@
+server:
+  port: 8040
+
+# 应用名称 （nacos会将该名称当做服务名称）
+spring:
+  application:
+    name: order-openfeign
+  cloud:
+    nacos:
+      server-addr: 172.16.10.132:8847 # 服务地址
+      discovery:
+        username: nacos
+        password: nacos
+#        namespace: public
+#        ephemeral: false # 永久实例 哪怕宕机了也不会删除该实例？
+
+#        service: # 默认取${spring.application.name}的值，也可以通过该选项配置 服务名称
+#        group: #默认DEFAULT_GROUP  分组管理
+
+# springboot 默认日志级别是 info， feign的debug 日志级别就不会输入
+# 日志级别从低到高分为：TRACE < DEBUG < INFO < WARN < ERROR < FATAL。
+logging:
+  level:
+    com.wang.order.feign: debug
+# Feign 日志局部配置
+feign:
+  client:
+    config:
+      product-service: # 对应微服务
+        loggerLevel: BASIC # 仅记录请求方法、URL、响应状态代码以及执行时间
+        contract: feign.Contract.Default # 设置为默认的契约 (还原成原生注解)
+        connectTimeout: 5000 # 连接超时时间，默认2s
+        readTimeout: 30000 # 请求处理超时时间，默认5s
+        requestInterceptors[0]:
+          com.wang.order.interceptor.feign.CustomFeignInterceptor
+

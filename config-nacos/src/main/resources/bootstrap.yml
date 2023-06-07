@@ -1,0 +1,31 @@
+spring:
+  application:
+    # 会自动根据服务名拉取dataid 对应的配置文件
+    name: nacos-config
+  cloud:
+    nacos:
+      server-addr: 172.16.10.132:8847 # 连接的是nginx地址，通过nginx 代理到nacos
+      username: nacos
+      password: nacos
+      config:
+        # 注释掉 namespace: public，解决控制台循环打印 ClientWorker 日志
+        #        namespace: public  #默认 public命名空间
+        file-extension: yaml # 默认 properties的文件扩展名,选择 yaml格式后--->需添加此配置
+        #        refresh-enabled: false # nacos 客户将无法感知 配置的变化
+        namespace: dev
+        group: TEST_GROUP
+
+        # 下面展示两种公共配置的方法，且用[] 和 - 都可以
+        shared-configs:
+          - data-id: common-config.yaml     # 下标：[0]
+            refresh: true # true表示可感知到配置文件的改变；默认为 false，无法动态感知配置文件的改变
+            group: DEFAULT_GROUP
+          - data-id: common-config-02.yaml   # 下标：[1]
+            refresh: true # true表示可感知到配置文件的改变；默认为 false，无法动态感知配置文件的改变
+            group: DEFAULT_GROUP
+        extension-configs[0]:
+          data-id: common-config-03.yaml
+          refresh: true
+          group: DEFAULT_GROUP
+# 配置文件的优先级（优先级大的会覆盖优先级小的，并且会形成互补）
+# profile > 默认配置文件 > extension-configs(下标越大优先级越大) > shared-configs(下标越大优先级越大)
