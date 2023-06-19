@@ -23,7 +23,7 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     @Transactional
     public void updateStock() {
 
-        Wrapper<Stock> wrapper = new QueryWrapper<Stock>().eq("product_id", 9);
+        Wrapper<Stock> wrapper = new QueryWrapper<Stock>().eq("product_id", 1);
         Stock stock = this.getOne(wrapper);
 
         stock.setCount(stock.getCount() - 1);
